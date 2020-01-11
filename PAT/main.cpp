@@ -2,6 +2,7 @@
 #include "SortAlgorithm.h"
 #include "ExecutePrimaryPat.h"
 #include "ExecuteRecursiveAlgorithm.h"
+#include "ExecuteAlgorithmNotes.h"
 
 int main(int argc, char** argv)
 {
@@ -9,7 +10,7 @@ int main(int argc, char** argv)
 	int options = 0;
 	while(1)
 	{
-		printf("0: Exit\n1: Sort Algorithm\n2: PAT tests\n3: Recursive Algorithm\n");
+		printf("0: Exit\n1: Sort Algorithm\n2: PAT tests\n3: Recursive Algorithm\n4: Algorithm Notes\n");
 		printf("Please input an instruction: ");
 		scanf("%d", &options);
 		switch(options)
@@ -24,6 +25,9 @@ int main(int argc, char** argv)
 				break;
 			case 3:
 				ExecuteRecursiveAlgorithm();
+				break;
+			case 4:
+				ExecuteAlgorithmNotes();
 				break;
 			default:
 				printf("Illegal input!!!");
