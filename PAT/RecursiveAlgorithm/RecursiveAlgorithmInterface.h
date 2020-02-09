@@ -19,4 +19,6 @@ void BasicFullPermutation();
 */
 void NQueens();
 
+void ExecuteSimpleDFS();
+
 #endif

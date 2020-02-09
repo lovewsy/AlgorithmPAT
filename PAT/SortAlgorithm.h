@@ -149,7 +149,4 @@ void SelectAlgorithm()
 		}
 	}
 }
-
-
-
 #endif

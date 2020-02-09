@@ -8,6 +8,7 @@ void ExecuteRecursiveAlgorithm()
 	while(1)
 	{
 		printf("0: Return to last menu.\n1: Basic Full Permutation.\n2: N Queue.\n");
+		printf("3: SimpleDFS\n");
 		printf("Please input an instruction: ");
 		int options = 0;
 		scanf("%d", &options);
@@ -20,6 +21,9 @@ void ExecuteRecursiveAlgorithm()
 				break;
 			case 2:
 				NQueens();
+				break;
+			case 3:
+				ExecuteSimpleDFS();
 				break;
 			default:
 				printf("Illegal input!!!");
