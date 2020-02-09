@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=30
+UnitCount=32
 
 [VersionInfo]
 Major=1
@@ -343,6 +343,26 @@ BuildCmd=
 FileName=DynamicProgramming\MaxSubsequence.cpp
 CompileCpp=1
 Folder=DynamicProgramming
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=DynamicProgramming\LongestIncreasingSequence.cpp
+CompileCpp=1
+Folder=DynamicProgramming
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=PrimaryPat\PAT_1014.cpp
+CompileCpp=1
+Folder=PrimaryPat
 Compile=1
 Link=1
 Priority=1000
