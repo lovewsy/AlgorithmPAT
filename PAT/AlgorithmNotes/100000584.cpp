@@ -47,96 +47,160 @@ int Exe_100000584_A()
 
 int Exe_100000584_B()
 {
-	int n = 0; 
-	float stage1 = 18.0f;
+	double stage1 = 18.0f;
 	int Num1 = 8;
-	int A[1000];
-	float costs[1000];
-	while(1)
-	{
-		scanf("%d", &A[n]);
-		if(A[n]==0)
-			break;
-		n++;
-	}
-	for(int i = 0; i < n; ++i)
-	{
-		costs[i] = 0.0f;
-		int le = A[i] / Num1;
-		A[i] -= le * Num1;
+	int A;
+	double cost;
+	while(scanf("%d", &A), A)
+	{		
+		cost = 0.0;
+		int le = A / Num1;
+		A -= le * Num1;
 	
-		if(le > 0 && A[i] <= 4)
+		if(le > 0 && A <= 4)
 		{
-			costs[i] += A[i]*2.4f;
-		}
-		else
-		{
-			costs[i] += 10.0f;
-			A[i] -= 4;
-			if(A[i] > 0)
-			{
-				costs[i] += A[i]*2.0f;
-			}
-		}
-		
-		if(le > 0)
-			costs[i] += stage1*le;
-	}
-	for(int i = 0; i<n; ++i)
-	{
-		if(costs[i] == (int)costs[i])
-		{
-			printf("%d\n", (int)costs[i]);
-		}
-		else
-		{
-			printf("%.1f\n", costs[i]);
-		}
-	}
-	return 0;
-}
-
-int Exe_100000584_B1()
-{
-	// > 15
-	int n = 0; 
-	float stage1 = 18.0f;
-	int Num1 = 8;
-	float cost;
-	while(1)
-	{
-		scanf("%d", &n);
-		if(n==0)
-			return 0;
-		cost = 0.0f;
-		int le = n / Num1;
-		n -= le * Num1;
-	
-		if(le > 0 && n <= 4)
-		{
-			cost += n*2.4f;
+			cost += A*2.4f;
 		}
 		else
 		{
 			cost += 10.0f;
-			n -= 4;
-			if(n > 0)
+			A -= 4;
+			if(A > 0)
 			{
-				cost += n*2.0f;
+				cost += A*2.0f;
 			}
 		}
+		
 		if(le > 0)
-			cost += stage1*le;
-			
+			cost += stage1*(float)(le);
 		if(cost == (int)cost)
 		{
 			printf("%d\n", (int)cost);
 		}
 		else
 		{
-			printf("%.1f\n", cost);
+			printf("%.1lf\n", cost);
 		}
+			
 	}
 	
+	return 0;
+}
+
+
+typedef struct Station
+{
+	double p;
+	int d;
+}Station;
+bool CmpStation(Station a, Station b)
+{
+	if(a.d != b.d)
+		return a.d < b.d;
+	else
+		return a.p < b.p;
+}
+#define MAX_STATIONS 500
+int Exe_100000584_C()
+{
+	Station stations[MAX_STATIONS];
+	double cmax, dis, Rdis, MaxRdis; 
+	int N, CheapStation, Location, CurrDis, LastDis, k;
+	double SumPrice, GasUnits, DecreasePrice;
+	bool CanReach;
+	while(scanf("%lf %lf %lf %d", &cmax, &dis, &Rdis, &N) != EOF)
+	{	
+		for(int i = 0; i < N; ++i)
+		{
+			scanf("%lf %d", &stations[i].p, &stations[i].d);
+		}
+		std::sort(stations, stations+N, CmpStation);
+		if(stations[0].d != 0)
+		{
+			printf("The maximum travel distance = 0.00\n");
+			continue;
+		}
+		MaxRdis = cmax * Rdis;
+		CheapStation = 0;
+		Location = 0;
+		CurrDis = 0;
+		LastDis = 0;
+		SumPrice = 0.0;
+		DecreasePrice = 0.0;
+		CanReach = true;
+		k = 1;
+		while(k < N)
+		{
+			CurrDis = stations[k].d - stations[Location].d;
+			if(CurrDis <= MaxRdis)
+			{
+				if(stations[k].p <= stations[Location].p)
+				{					
+					SumPrice += stations[Location].p * (1.0*CurrDis/(double)Rdis);
+					Location = k;
+					CheapStation = 0;
+				}
+				else
+				{
+					if(CheapStation == 0 || (CheapStation != 0 && stations[k].p <= stations[CheapStation].p))
+					{
+						CheapStation = k;
+					}
+				}
+				++k;
+			}
+			else
+			{
+				if(CheapStation == 0)
+				{
+					CanReach = false;
+					break;
+				}
+				else
+				{
+					CurrDis = stations[CheapStation].d - stations[Location].d;
+					SumPrice += stations[Location].p * (1.0*CurrDis/(double)Rdis);
+					DecreasePrice += (stations[CheapStation].p-stations[Location].p) * (1.0*(MaxRdis-CurrDis)/Rdis);
+					Location = CheapStation;
+					k = CheapStation + 1;
+					CheapStation = 0;
+				}
+			}			
+		}
+		if(!CanReach)
+		{
+			printf("The maximum travel distance = %.2f\n", stations[Location].d+MaxRdis);
+			continue;
+		}
+		CurrDis = dis - stations[Location].d;	
+		if(CurrDis > MaxRdis)
+		{
+			if(CheapStation == 0)
+			{
+				printf("The maximum travel distance = %.2f\n", stations[Location].d+MaxRdis);
+				continue;
+			}
+			else
+			{
+				LastDis = dis - stations[CheapStation].d;
+				if(LastDis > MaxRdis)
+				{
+					printf("The maximum travel distance = %.2f\n", stations[CheapStation].d+MaxRdis);
+					continue;
+				}
+				else
+				{
+					SumPrice += stations[Location].p * (1.0*MaxRdis/(double)Rdis);
+					SumPrice += stations[CheapStation].p * (1.0*(CurrDis-MaxRdis)/(double)Rdis);
+				}
+			}
+		}
+		else
+		{
+			SumPrice += stations[Location].p * (1.0*CurrDis/Rdis);
+		}	
+		SumPrice -= DecreasePrice;		
+		printf("%.2lf\n", SumPrice);
+	}
 	return 0;
 }

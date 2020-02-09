@@ -24,12 +24,12 @@ HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders=AlgorithmNotes,DataStructure,DynamicProgramming,PrimaryPat,RecursiveAlgorithm
+Folders=AlgorithmNotes,PrimaryPat,RecursiveAlgorithm
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=32
+UnitCount=25
 
 [VersionInfo]
 Major=1
@@ -201,9 +201,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=DataStructure\DataStructureInterface.h
+FileName=AlgorithmNotes\100000582.cpp
 CompileCpp=1
-Folder=DataStructure
+Folder=AlgorithmNotes
 Compile=1
 Link=1
 Priority=1000
@@ -211,25 +211,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=DataStructure\GraphAlgorithm.cpp
-CompileCpp=1
-Folder=DataStructure
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit18]
-FileName=DataStructure\GraphAlgorithm.o
-Folder=DataStructure
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit19]
 FileName=PrimaryPat\PAT_1003.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -239,27 +220,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit20]
-FileName=RecursiveAlgorithm\SimpleDFS.cpp
-CompileCpp=1
-Folder=RecursiveAlgorithm
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit21]
-FileName=ExecuteDataStructureAlgorithm.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit22]
+[Unit18]
 FileName=PrimaryPat\PAT_1004.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -269,7 +230,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit19]
 FileName=PrimaryPat\PAT_1005_1006_1007.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -279,7 +240,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit20]
 FileName=PrimaryPat\PAT_1008_1009_1010_1011.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -289,7 +250,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit21]
 FileName=PrimaryPat\PAT_1012.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -299,7 +260,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit22]
 FileName=PrimaryPat\PAT_1013.cpp
 CompileCpp=1
 Folder=PrimaryPat
@@ -309,8 +270,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
-FileName=ExecuteDynamicProgramming.h
+[Unit23]
+FileName=PrimaryPat\PAT_1014.cpp
+CompileCpp=1
+Folder=PrimaryPat
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit24]
+FileName=ExecuteDataStructureAlgorithm.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -319,50 +290,10 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
-FileName=DynamicProgramming\PyramidOfNumber.cpp
+[Unit25]
+FileName=ExecuteDynamicProgramming.h
 CompileCpp=1
-Folder=DynamicProgramming
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit27]
-FileName=DynamicProgramming\DynamicProgrammingInterface.h
-CompileCpp=1
-Folder=DynamicProgramming
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit30]
-FileName=DynamicProgramming\MaxSubsequence.cpp
-CompileCpp=1
-Folder=DynamicProgramming
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit31]
-FileName=DynamicProgramming\LongestIncreasingSequence.cpp
-CompileCpp=1
-Folder=DynamicProgramming
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit32]
-FileName=PrimaryPat\PAT_1014.cpp
-CompileCpp=1
-Folder=PrimaryPat
+Folder=
 Compile=1
 Link=1
 Priority=1000
