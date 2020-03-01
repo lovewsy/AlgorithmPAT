@@ -7,94 +7,90 @@ using namespace std;
 
 #define MAX_N 20
 #define MAX_K 1000
-struct Customer
+namespace PAT_1014
 {
-	int num;
-	int time;
-};
-struct Time
-{
-	int hour;
-	int minute;
-};
-Time TimerElapse(int minutes)
-{
-	static Time startTime = {8, 0};
-	startTime.hour += minutes / 60;
-	startTime.minute += minutes % 60;
-	return startTime;
+	struct Window
+	{
+		queue<int> customers;
+		int popTime;
+		int endTime;
+	};
 }
+using namespace PAT_1014;
+
 int Execute_1014()
 {
 	int N, M, K ,Q;
-	queue<Customer> customers;
-	queue<Customer> windows[MAX_N];
-	Time EndTimes[K];
-	int query[MAX_K];
+	int closedTime = 540;
+	vector<Window> windows;
+	vector<int> serveTimes;
+	vector<int> query;
 	scanf("%d %d %d %d", &N, &M, &K, &Q);
+	windows.resize(N);
+	serveTimes.resize(K);
+	query.resize(Q);
+	vector<int> endTimes(K, -1);
+	for(int i = 0; i < N; ++i)
+	{
+		windows[i].popTime = 0;
+		windows[i].endTime = 0;
+	}
 	for(int i = 0; i < K; ++i)
 	{
-		Customer c;
-		c.num = i;
-		scanf("%d", &c.time);
-		if(windows[i % N].size() < M)
-		{
-			windows[i % N].push(c);
-		}
-		else
-			customers.push(c);
+		scanf("%d", &serveTimes[i]);
 	}
 	for(int i = 0; i < Q; ++i)
 	{
 		scanf("%d", &query[i]);
 	}
-	int served = 0;
-	while(!customers.empty() || served != K)
+	int index = 0;
+	for(int i = 0; i < M; ++i)
 	{
-		int minMinute = 0;
-		for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N && index < K; ++j)
 		{
-			if(!windows[i].empty())
+			windows[j].customers.push(index);
+			if(i == 0)
 			{
-				if(minMinute == 0)
-					minMinute = windows[i].front().time;
-				else
-					minMinute = min(windows[i].front().time, minMinute);
+				windows[j].popTime = serveTimes[index];			
+			}
+			if(windows[j].endTime < 540)
+			{
+				endTimes[index] = windows[j].endTime + serveTimes[index];
+			}
+			windows[j].endTime += serveTimes[index];
+			index++;
+		}
+	}
+	while(index < K)
+	{
+		int minPopTime = windows[0].popTime, tmpIndex = 0;
+		for(int i = 1; i < N; ++i)
+		{
+			if(windows[i].popTime < minPopTime)
+			{
+				minPopTime = windows[i].popTime;
+				tmpIndex = i;
 			}
 		}
-		Time now = TimerElapse(minMinute);
-		for(int i = 0; i < N; ++i)
+		windows[tmpIndex].customers.pop();
+		windows[tmpIndex].customers.push(index);
+		windows[tmpIndex].popTime += serveTimes[windows[tmpIndex].customers.front()];
+		if(windows[tmpIndex].endTime < 540)
 		{
-			if(!windows[i].empty())
-			{
-				windows[i].front().time -= minMinute;
-				if(windows[i].front().time == 0)
-				{
-					EndTimes[windows[i].front().num] = now;
-					windows[i].pop();
-					++served;
-					if(!customers.empty())
-					{
-						windows[i].push(customers.front());
-						customers.pop();
-					}	
-				}
-			}			
-		}		
+			endTimes[index] = windows[tmpIndex].endTime + serveTimes[index];
+		}
+		windows[tmpIndex].endTime += serveTimes[index];
+		index++;
 	}
 	for(int i = 0; i < Q; ++i)
 	{
-		if(query[i] > K || query[i] < 1)
-			printf("Sorry");
-		else
+		int end = endTimes[query[i] - 1];
+		if(end != -1)
 		{
-			if((EndTimes[query[i] - 1].hour == 17 && EndTimes[query[i] - 1].minute == 0) || EndTimes[query[i] - 1].hour < 17)
-				printf("%2.d:%2.d", EndTimes[query[i] - 1].hour, EndTimes[query[i] - 1].minute);
-			else 
-				printf("Sorry");
+			printf("%02d:%02d\n", 8 + end/60, end%60);
 		}
-		if(i != Q-1)
-			printf("\n");
+		else
+			printf("Sorry\n");
 	}
 	return 0;
 }
