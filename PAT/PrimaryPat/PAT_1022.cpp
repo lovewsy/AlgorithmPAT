@@ -1,57 +1,57 @@
+/*
+* key point:
+* If you use integer type for ID, you should consider the output format when ID is less than 1000000.
+* Because, ID is a 7-digital number.
+*/
 #include "PrimaryPatInterface.h"
 #include <cstdio>
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <map>
 #include <iostream>
 using namespace std;
 
 namespace PAT_1022
 {
-	struct Book
-	{
-		int ID;
-		string title;	// 1
-		string author;	// 2
-		vector<string> keyWords; // 3
-		string publisher; // 4
-		int year; //5
-	};
 	struct Query
 	{
 		int type;
-		string strSearch;
-		int year;
+		string search;
 	};
 }
 using namespace PAT_1022;
 int Execute_1022()
 {
 	int N, M;
-	vector<Book> library;
+	map<string, vector<int>> data[5];
 	vector<vector<int>> result;
 	vector<Query> query;
 	scanf("%d", &N);
 	for(int i = 0; i < N; ++i)
 	{
-		Book b;
-		while(cin >> b.ID)
+		int ID;
+		string title, author, publisher, year;
+		while(cin >> ID)
 		{
 			if(getchar() == '\n')
 				break;
 		}
-		getline(cin, b.title);
-		getline(cin, b.author);
-		string s;
-		while(cin >> s)
+		getline(cin, title);
+		data[0][title].push_back(ID);
+		getline(cin, author);
+		data[1][author].push_back(ID);
+		string keyword;
+		while(cin >> keyword)
 		{
-			b.keyWords.push_back(s);
+			data[2][keyword].push_back(ID);
 			if(getchar() == '\n')
 				break;
 		}
-		getline(cin, b.publisher);
-		cin >> b.year;
-		library.emplace_back(b);
+		getline(cin, publisher);
+		data[3][publisher].push_back(ID);
+		cin >> year;
+		data[4][year].push_back(ID);
 	}
 	while(cin >> M)
 	{
@@ -65,67 +65,19 @@ int Execute_1022()
 		Query q;
 		cin >> q.type >> tmp;
 		getchar();
-		if(q.type != 5)
-			getline(cin, q.strSearch);
-		else
-			cin >> q.year;
-		//getchar();
+		getline(cin, q.search);
 		query.push_back(q);
 	}
 	
 	for(int i = 0; i < query.size(); ++i)
 	{
-		for(int j = 0; j < library.size(); ++j)
-		{
-			switch(query[i].type)
-			{
-				case 1:
-				{
-					if(library[j].title == query[i].strSearch)
-					{
-						result[i].push_back(library[j].ID);
-					}
-				}
-					
-				break;
-				case 2:
-					if(library[j].author == query[i].strSearch)
-					{
-						result[i].push_back(library[j].ID);
-					}
-				break;
-				case 3:
-					for(auto w : library[j].keyWords)
-					{
-						if(w == query[i].strSearch)
-						{
-							result[i].push_back(library[j].ID);
-							break;
-						}
-					}
-				break;
-				case 4:
-					if(library[j].publisher == query[i].strSearch)
-					{
-						result[i].push_back(library[j].ID);
-					}
-				break;
-				case 5:
-					if(library[j].year == query[i].year)
-					{
-						result[i].push_back(library[j].ID);
-					}
-				break;
-			}
-		}
+		if(data[query[i].type-1].find(query[i].search) != data[query[i].type-1].end())
+			result[i].assign(data[query[i].type-1][query[i].search].begin(), data[query[i].type-1][query[i].search].end());
 	}
 	for(int i = 0; i < result.size(); ++i)
 	{
 		cout << query[i].type << ": ";
-		if(query[i].type != 5)
-			cout << query[i].strSearch << "\n";
-		else
-			cout << query[i].year << "\n";
+		cout << query[i].search << "\n";
 		if(result[i].size() == 0)
 			printf("Not Found\n");
 		else
@@ -133,7 +85,7 @@ int Execute_1022()
 			sort(result[i].begin(), result[i].end());
 			for(auto id : result[i])
 			{
-				cout << id << "\n";
+				printf("%07d\n", id);
 			}
 		}
 	}
